@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:expense_app/widgets/adaptive_flat_button.dart';
+import 'package:expense_app/widgets/adaptive_raised_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -85,46 +87,10 @@ class _NewTransactionState extends State<NewTransaction> {
                         ? 'No Date Chosen!'
                         : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
                   ),
-                  Platform.isIOS
-                      ? CupertinoButton(
-                          child: Text(
-                            'Choose Date',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          onPressed: _presentDatePicker,
-                        )
-                      : FlatButton(
-                          child: Text(
-                            'Choose Date',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                          onPressed: _presentDatePicker,
-                        )
+                  AdaptiveFlatButton('Choose Date!', _presentDatePicker),
                 ],
               ),
-              Platform.isIOS
-                  ? CupertinoButton(
-                      color: Theme.of(context).primaryColor,
-                      child: Text(
-                        "Add Transaction",
-                        style: TextStyle(
-                            color: Theme.of(context).textTheme.button.color),
-                      ),
-                      onPressed: _submitData,
-                    )
-                  : RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      child: Text(
-                        "Add Transaction",
-                        style: TextStyle(
-                            color: Theme.of(context).textTheme.button.color),
-                      ),
-                      onPressed: _submitData,
-                    )
+              AdaptiveRaisedButton("Add Transaction", _submitData),
             ],
           ),
         ),
