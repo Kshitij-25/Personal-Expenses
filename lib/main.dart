@@ -172,52 +172,88 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     ];
   }
 
-  Widget _buildAppBar() {
-    return Platform.isIOS
-        ? CupertinoNavigationBar(
-            middle: Text("Personal Expenses"),
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? CupertinoNavigationBar( backgroundColor: Colors.purple,
+            middle: Text(
+              'Personal Expenses',
+            ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 GestureDetector(
-                  child: const Icon(CupertinoIcons.add),
+                  child: Icon(CupertinoIcons.add),
                   onTap: () => _startAddNewTransaction(context),
                 ),
               ],
             ),
           )
         : AppBar(
-            title: Text("Personal Expenses"),
+            title: Text(
+              'Personal Expenses',
+            ),
             actions: <Widget>[
               IconButton(
-                icon: const Icon(Icons.add),
+                icon: Icon(Icons.add),
                 onPressed: () => _startAddNewTransaction(context),
-              )
+              ),
             ],
           );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final PreferredSizeWidget appBar = _buildAppBar();
     final txListWidget = Container(
-        height: (mediaQuery.size.height -
-                appBar.preferredSize.height -
-                mediaQuery.padding.top) *
-            0.7,
-        child: TransactionList(_userTransactions, _deleteTransaction));
-
+      height: (mediaQuery.size.height -
+              appBar.preferredSize.height -
+              mediaQuery.padding.top) *
+          0.7,
+      child: TransactionList(_userTransactions, _deleteTransaction),
+    );
     final pageBody = SafeArea(
       child: SingleChildScrollView(
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             if (isLandscape)
-              ..._buildLandscapeContent(mediaQuery, appBar, txListWidget),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Show Chart',
+                    style: Theme.of(context).textTheme.title,
+                  ),
+                  Switch.adaptive(
+                    activeColor: Theme.of(context).accentColor,
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    },
+                  ),
+                ],
+              ),
             if (!isLandscape)
-              ..._buildPortraitContent(mediaQuery, appBar, txListWidget),
+              Container(
+                height: (mediaQuery.size.height -
+                        appBar.preferredSize.height -
+                        mediaQuery.padding.top) *
+                    0.3,
+                child: Chart(_recentTransactions),
+              ),
+            if (!isLandscape) txListWidget,
+            if (isLandscape)
+              _showChart
+                  ? Container(
+                      height: (mediaQuery.size.height -
+                              appBar.preferredSize.height -
+                              mediaQuery.padding.top) *
+                          0.7,
+                      child: Chart(_recentTransactions),
+                    )
+                  : txListWidget
           ],
         ),
       ),
@@ -235,7 +271,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(
-                    child: const Icon(Icons.add),
+                    child: Icon(Icons.add),
                     onPressed: () => _startAddNewTransaction(context),
                   ),
           );

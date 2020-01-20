@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:expense_app/widgets/adaptive_flat_button.dart';
-import 'package:expense_app/widgets/adaptive_raised_button.dart';
+import '../widgets/adaptive_flat_button.dart';
+import '../widgets/adaptive_raised_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
