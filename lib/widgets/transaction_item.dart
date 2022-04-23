@@ -29,7 +29,7 @@ class TransactionItem extends StatelessWidget {
         ),
         title: Text(
           transaction.title,
-          style: Theme.of(context).textTheme.copyWith().title,
+          style: Theme.of(context).textTheme.copyWith().headline6,
         ),
         subtitle: Text(
           DateFormat.yMMMMd().format(transaction.date),

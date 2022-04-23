@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
+              subtitle1: TextStyle(
                   fontFamily: 'OpenSans',
                   fontWeight: FontWeight.bold,
                   fontSize: 18),
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
+              subtitle1: TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
@@ -134,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         children: <Widget>[
           Text(
             "Show Chart",
-            style: Theme.of(context).textTheme.title,
+            style: Theme.of(context).textTheme.headline6,
           ),
           Switch.adaptive(
             activeColor: Theme.of(context).accentColor,
@@ -172,13 +172,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     ];
   }
 
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar( backgroundColor: Colors.purple,
+        ? CupertinoNavigationBar(
+            backgroundColor: Colors.purple,
             middle: Text(
               'Personal Expenses',
             ),
@@ -222,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                 children: <Widget>[
                   Text(
                     'Show Chart',
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Switch.adaptive(
                     activeColor: Theme.of(context).accentColor,
